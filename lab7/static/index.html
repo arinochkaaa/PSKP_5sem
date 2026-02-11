@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07-01</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Демонстрация работы сервера 07-01</h1>
+            <p>Статический файловый сервер</p>
+        </header>
+           <nav class="navigation">
+            <button onclick="showSection('css-section')">CSS</button>
+            <button onclick="showSection('image-section')">Изображение</button>
+            <button onclick="showSection('video-section')">Видео</button>
+            <button onclick="showSection('document-section')">Документ</button>
+            <button onclick="showSection('json-section')">JSON</button>
+            <button onclick="showSection('xml-section')">XML</button>
+        </nav>
+        <main>
+            <section id="css-section" class="content-section active">
+                <h2>CSS файл</h2>
+                <p>Стили загружены из CSS файла через тег &lt;link&gt;</p>
+                <div class="demo-box">
+                    Демонстрационная рамка со стилями
+                </div>
+            </section>
+
+            <section id="image-section" class="content-section">
+                <h2>PNG изображение</h2>
+                <p>Загружено через тег &lt;img&gt;</p>
+                <div class="image-container">
+                    <img src="/images/sample.jpg" alt="Пример изображения" width="300">
+                </div>
+            </section>
+
+            <section id="video-section" class="content-section">
+                <h2>MP4 видео</h2>
+                <p>Загружено через тег &lt;video&gt;</p>
+                <video src="/videos/sample.mp4" controls width="400">
+                    Ваш браузер не поддерживает видео тег.
+                </video>
+            </section>
+
+            <section id="document-section" class="content-section">
+                <h2>DOCX документ</h2>
+                <p>Скачивание через тег &lt;a&gt;</p>
+                <a href="/docs/sample.docx" download class="download-link">
+                    Скачать документ DOCX
+                </a>
+            </section>
+
+            <section id="json-section" class="content-section">
+                <h2>JSON файл</h2>
+                <p>Загружен через JavaScript fetch API</p>
+                <div class="controls">
+                    <button onclick="loadJSON()">Загрузить JSON</button>
+                    <button onclick="clearContent('json-content')">Очистить</button>
+                </div>
+                <div class="result-container">
+                    <pre id="json-content" class="code-block"></pre>
+                </div>
+            </section>
+
+            <section id="xml-section" class="content-section">
+                <h2>XML файл</h2>
+                <p>Загружен через JavaScript fetch API</p>
+                <div class="controls">
+                    <button onclick="loadXML()">Загрузить XML</button>
+                    <button onclick="clearContent('xml-content')">Очистить</button>
+                </div>
+                <div class="result-container">
+                    <pre id="xml-content" class="code-block"></pre>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

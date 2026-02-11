@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>DB demo (валидная версия)</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 20px auto; line-height: 1.5; }
+        fieldset { margin-bottom: 15px; padding: 12px; border-radius: 8px; }
+        legend { font-weight: bold; }
+        label { display: block; margin-top: 6px; }
+        input[type=text], input[type=number] {
+            width: 300px; padding: 6px; margin-top: 3px;
+            border: 1px solid #ccc; border-radius: 4px;
+        }
+        button {
+            margin-top: 10px; padding: 6px 12px;
+            border: none; border-radius: 4px; background: #007bff;
+            color: white; cursor: pointer;
+        }
+        button:hover { background: #0056b3; }
+        pre {
+            background: #f8f8f8; padding: 12px;
+            border-radius: 6px; border: 1px solid #ddd;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<h1>Демонстрация работы DB API</h1>
+
+<fieldset>
+    <legend>GET — получить все строки</legend>
+    <button id="btn-get">GET /api/db</button>
+</fieldset>
+
+<fieldset>
+    <legend>POST — добавить строку</legend>
+    <label>Имя:
+        <input id="post-name" type="text" placeholder="Иван Иванов">
+    </label>
+    <label>Дата рождения:
+        <input id="post-bday" type="text" placeholder="YYYY-MM-DD">
+    </label>
+    <button id="btn-post">POST /api/db</button>
+</fieldset>
+
+<fieldset>
+    <legend>PUT — изменить строку</legend>
+    <label>ID:
+        <input id="put-id" type="number" placeholder="1">
+    </label>
+    <label>Имя:
+        <input id="put-name" type="text" placeholder="Новое имя">
+    </label>
+    <label>Дата рождения:
+        <input id="put-bday" type="text" placeholder="YYYY-MM-DD">
+    </label>
+    <button id="btn-put">PUT /api/db</button>
+</fieldset>
+
+<fieldset>
+    <legend>DELETE — удалить строку</legend>
+    <label>ID:
+        <input id="del-id" type="number" placeholder="1">
+    </label>
+    <button id="btn-del">DELETE /api/db?id=...</button>
+</fieldset>
+
+<h2>Результат</h2>
+<pre id="result">—</pre>
+
+<script>
+    const resultEl = document.getElementById('result');
+
+    function show(obj) {
+        resultEl.textContent = typeof obj === 'string'
+            ? obj
+            : JSON.stringify(obj, null, 2);
+    }
+
+    // Проверка формата и реальности даты
+    function isValidDate(str) {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(str)) return false;
+        const [y, m, d] = str.split('-').map(Number);
+        const dt = new Date(y, m - 1, d);
+        if (dt.getFullYear() !== y || dt.getMonth() !== m - 1 || dt.getDate() !== d) return false;
+
+        // NEW: проверка, что дата не позже сегодняшнего дня
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // обнуляем время
+        if (dt > today) return 'future'; // особый флаг для будущей даты
+
+        return true;
+    }
+
+    async function doGet() {
+        try {
+            const res = await fetch('/api/db');
+            const json = await res.json();
+            show(json);
+        } catch (e) {
+            show({ error: e.message });
+        }
+    }
+
+    async function doPost() {
+        const name = document.getElementById('post-name').value.trim();
+        const bday = document.getElementById('post-bday').value.trim();
+
+        if (!name) return show({ error: 'Имя не может быть пустым' });
+        const dateCheck = isValidDate(bday);
+        if (dateCheck === false)
+            return show({ error: 'Некорректная дата! Используйте формат YYYY-MM-DD' });
+        if (dateCheck === 'future')
+            return show({ error: 'Дата рождения не может быть позже сегодняшнего дня' });
+
+        try {
+            const res = await fetch('/api/db', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, bday })
+            });
+            const json = await res.json();
+            show(json);
+            doGet();
+        } catch (e) {
+            show({ error: e.message });
+        }
+    }
+
+    async function doPut() {
+        const id = Number(document.getElementById('put-id').value);
+        const name = document.getElementById('put-name').value.trim();
+        const bday = document.getElementById('put-bday').value.trim();
+
+        if (!Number.isFinite(id) || id <= 0)
+            return show({ error: 'ID должен быть положительным числом' });
+        if (!name && !bday)
+            return show({ error: 'Введите хотя бы одно поле для обновления' });
+
+        if (bday) {
+            const dateCheck = isValidDate(bday);
+            if (dateCheck === false)
+                return show({ error: 'Некорректная дата! Используйте формат YYYY-MM-DD' });
+            if (dateCheck === 'future')
+                return show({ error: 'Дата рождения не может быть позже сегодняшнего дня' });
+        }
+
+        try {
+            const res = await fetch('/api/db', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, name, bday })
+            });
+            const json = await res.json();
+            show(json);
+            doGet();
+        } catch (e) {
+            show({ error: e.message });
+        }
+    }
+
+    async function doDelete() {
+        const id = Number(document.getElementById('del-id').value);
+        if (!Number.isFinite(id) || id <= 0)
+            return show({ error: 'Введите корректный ID для удаления' });
+
+        try {
+            const res = await fetch('/api/db?id=' + encodeURIComponent(id), { method: 'DELETE' });
+            const json = await res.json();
+            show(json);
+            doGet();
+        } catch (e) {
+            show({ error: e.message });
+        }
+    }
+
+    document.getElementById('btn-get').addEventListener('click', doGet);
+    document.getElementById('btn-post').addEventListener('click', doPost);
+    document.getElementById('btn-put').addEventListener('click', doPut);
+    document.getElementById('btn-del').addEventListener('click', doDelete);
+
+    doGet();
+</script>
+
+</body>
+</html>

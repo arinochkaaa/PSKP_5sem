@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>XMLHttpRequest Demo</title>
+</head>
+<body>
+    <h1>Демонстрация XMLHttpRequest</h1>
+    <div id="result">Загрузка данных...</div>
+
+    <script>
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '/api/name', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById('result').textContent = xhr.responseText;
+            }
+        };
+        xhr.send();
+    </script>
+</body>
+</html>

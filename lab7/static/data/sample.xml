@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog description="Демонстрационный каталог продуктов">
+    <server-info>
+        <name>07-01 Статический сервер</name>
+        <version>1.0.0</version>
+        <description>Сервер для обработки статических файлов</description>
+        <author>Student</author>
+        <course>ПСКП</course>
+    </server-info>
+    
+    <supported-formats>
+        <format>HTML</format>
+        <format>CSS</format>
+        <format>JavaScript</format>
+        <format>PNG</format>
+        <format>DOCX</format>
+        <format>JSON</format>
+        <format>XML</format>
+        <format>MP4</format>
+    </supported-formats>
+    
+    <products>
+        <product id="1" category="electronics">
+            <name>Mackbook pro</name>
+            <brand>apple</brand>
+            <price currency="RUB">89999</price>
+            <specifications>
+                <processor>M3</processor>
+                <ram>16GB</ram>
+                <storage>512GB SSD</storage>
+                <graphics>NVIDIA RTX 3060</graphics>
+            </specifications>
+            <inStock>true</inStock>
+            <rating>4.5</rating>
+        </product>
+        
+        <product id="2" category="electronics">
+            <name>Iphone 11</name>
+            <brand>apple</brand>
+            <price currency="RUB">54999</price>
+            <specifications>
+                <screen>6.7 inch AMOLED</screen>
+                <storage>256GB</storage>
+                <camera>108MP</camera>
+                <battery>5000mAh</battery>
+            </specifications>
+            <inStock>true</inStock>
+            <rating>4.3</rating>
+        </product>
+        
+        <product id="3" category="books">
+            <name>гранатовый браслет</name>
+            <author>Александр Куприн</author>
+            <price currency="RUB">2499</price>
+            <pages>176</pages>
+            <inStock>true</inStock>
+            <rating>4.7</rating>
+        </product>
+    </products>
+    
+    <!-- Комментарий: это демонстрационный XML файл -->
+    <statistics>
+        <requests today="0" total="0"/>
+        <performance>
+            <responseTime>0ms</responseTime>
+            <uptime>100%</uptime>
+        </performance>
+    </statistics>
+</catalog>

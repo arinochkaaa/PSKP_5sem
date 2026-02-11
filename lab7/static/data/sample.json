@@ -1,0 +1,78 @@
+{
+    "server": {
+        "name": "07-01 Статический сервер",
+        "version": "1.0.0",
+        "description": "Демонстрационный сервер для обработки GET-запросов",
+        "author": "student",
+        "course": "ПСКП"
+    },
+    "features": {
+        "supportedMethods": ["GET"],
+        "staticFiles": true,
+        "mimeTypes": [
+            "text/html",
+            "text/css", 
+            "text/javascript",
+            "image/png",
+            "application/msword",
+            "application/json",
+            "application/xml",
+            "video/mp4"
+        ]
+    },
+    "endpoints": {
+        "root": "/",
+        "css": "/css/styles.css",
+        "javascript": "/js/script.js",
+        "images": "/images/{filename}",
+        "videos": "/videos/{filename}",
+        "documents": "/docs/{filename}",
+        "data": "/data/{filename}"
+    },
+    "statistics": {
+        "requestsServed": 0,
+        "uptime": "0 seconds",
+        "memoryUsage": "unknown"
+    },
+    "examples": {
+        "users": [
+            {
+                "id": 1,
+                "name": "Арина Волосюк",
+                "email": "arina@example.com",
+                "role": "admin",
+                "active": true
+            },
+            {
+                "id": 2,
+                "name": "Arina Volosyuk",
+                "email": "arinaa@example.com",
+                "role": "user",
+                "active": true
+            },
+            {
+                "id": 3,
+                "name": "ARINOCHKA VOLOSYUK",
+                "email": "arinochkaa@example.com",
+                "role": "user",
+                "active": false
+            }
+        ],
+        "products": [
+            {
+                "id": "prod-001",
+                "name": "Ноутбук",
+                "price": 999.99,
+                "category": "electronics",
+                "inStock": true
+            },
+            {
+                "id": "prod-002", 
+                "name": "Смартфон",
+                "price": 499.99,
+                "category": "electronics",
+                "inStock": true
+            }
+        ]
+    }
+}
