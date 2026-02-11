@@ -1,0 +1,119 @@
+{
+  "query": "query { getFaculties { faculty faculty_name } }"
+}
+
+{
+  "query": "query($f:String){ getFaculties(faculty:$f){ faculty faculty_name } }",
+  "variables": { "f": "ИТ" }
+}
+
+{
+  "query": "query { getTeachers { teacher teacher_name pulpit } }"
+}
+
+{
+  "query": "query($f:String){ getTeachers(teacher:$f){ teacher teacher_name pulpit } }",
+  "variables": { "f": "БРГ" }
+}
+
+{
+  "query": "query { getPulpits { pulpit pulpit_name faculty } }"
+}
+
+{
+  "query": "query($f:String){ getPulpits(pulpit:$f){ pulpit pulpit_name faculty } }",
+  "variables": { "f": "ИСиТ" }
+}
+
+{
+  "query": "query { getSubjects { subject subject_name pulpit } }"
+}
+
+{
+  "query": "query($f:String){ getSubjects(subject:$f){ subject subject_name pulpit } }",
+  "variables": { "f": "БД" }
+}
+
+
+
+
+
+{
+  "query": "mutation($f:FacultyInput!){ setFaculty(faculty:$f){ faculty faculty_name } }",
+  "variables": { "f": { "faculty": "Новый", "faculty_name": "Новый факультет" } }
+}
+
+{
+  "query": "mutation($f:FacultyInput!){ setFaculty(faculty:$f){ faculty faculty_name } }",
+  "variables": { "f": { "faculty": "Новый", "faculty_name": "Измененный факультет" } }
+}
+
+{
+  "query": "mutation($f:TeacherInput!){ setTeacher(teacher:$f){ teacher teacher_name pulpit} }",
+  "variables": { "f": { "teacher": "new", "teacher_name": "new teacher", "pulpit": "ИСиТ" } }
+}
+
+{
+  "query": "mutation($f:TeacherInput!){ setTeacher(teacher:$f){ teacher teacher_name pulpit} }",
+  "variables": { "f": { "teacher": "new", "teacher_name": "not new teacher", "pulpit": "ИСиТ" } }
+}
+
+{
+  "query": "mutation($f:PulpitInput!){ setPulpit(pulpit:$f){ pulpit pulpit_name faculty} }",
+  "variables": { "f": { "pulpit": "new", "pulpit_name": "new pulpit", "faculty": "ИТ" } }
+}
+
+{
+  "query": "mutation($f:PulpitInput!){ setPulpit(pulpit:$f){ pulpit pulpit_name faculty} }",
+  "variables": { "f": { "pulpit": "new", "pulpit_name": "not new pulpit", "faculty": "ИТ" } }
+}
+
+{
+  "query": "mutation($f:SubjectInput!){ setSubject(subject:$f){ subject subject_name pulpit} }",
+  "variables": { "f": { "subject": "new", "subject_name": "new subject", "pulpit": "ИСиТ" } }
+}
+
+{
+  "query": "mutation($f:SubjectInput!){ setSubject(subject:$f){ subject subject_name pulpit} }",
+  "variables": { "f": { "subject": "new", "subject_name": "not new subject", "pulpit": "ИСиТ" } }
+}
+
+
+
+
+
+
+
+{
+  "query": "mutation($f:String!){ delFaculty(faculty:$f) }",
+  "variables": { "f": "Новый" }
+}
+
+{
+  "query": "mutation($f:String!){ delTeacher(teacher:$f) }",
+  "variables": { "f": "new" }
+}
+
+{
+  "query": "mutation($f:String!){ delPulpit(pulpit:$f) }",
+  "variables": { "f": "new" }
+}
+
+{
+  "query": "mutation($f:String!){ delSubject(subject:$f) }",
+  "variables": { "f": "new" }
+}
+
+
+
+
+
+{
+  "query": "query($f:String!){ getTeachersByFaculty(faculty:$f){ teacher teacher_name pulpit faculty } }",
+  "variables": { "f": "ИТ" }
+}
+
+{
+  "query": "query($f:String!){ getSubjectsByFaculties(faculty:$f){ pulpit pulpit_name subjects { subject subject_name } faculty } }",
+  "variables": { "f": "ИТ" }
+}
